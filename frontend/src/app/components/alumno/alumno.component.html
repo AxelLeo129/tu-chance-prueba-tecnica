@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2>Gestión de Alumnos</h2>
+
+  <div class="mb-3">
+      <label>Nombre:</label>
+      <input type="text" class="form-control" [(ngModel)]="nombre">
+  </div>
+  <div class="mb-3">
+      <label>Edad:</label>
+      <input type="number" class="form-control" [(ngModel)]="edad">
+  </div>
+  <div class="mb-3">
+      <label>Grado:</label>
+      <input type="text" class="form-control" [(ngModel)]="grado">
+  </div>
+  <button class="btn btn-primary" (click)="agregarAlumno()">Agregar Alumno</button>
+
+  <hr>
+
+  <h3>Consultar Alumnos</h3>
+  <input type="text" class="form-control" [(ngModel)]="grado" placeholder="Ingrese grado">
+  <button class="btn btn-secondary mt-2" (click)="obtenerAlumnos()">Consultar</button>
+
+  <table class="table table-striped mt-3" *ngIf="alumnos.length > 0">
+      <thead>
+          <tr>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Grado</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let alumno of alumnos">
+              <td>{{ alumno.nombre }}</td>
+              <td>{{ alumno.edad }}</td>
+              <td>{{ alumno.grado }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
