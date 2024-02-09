@@ -67,7 +67,12 @@ Sigue estos pasos para configurar el proyecto localmente:
         ```bash
         php artisan migrate
         ```
-    
+        - Instalar y configurar Laravel Sanctum:
+        ```bash
+        php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+        php artisan migrate
+        ```
+
 4. **Ejecutar el proyecto**
 
     - Para ejecutar el proyecto, dentro de la misma terminal respectiva: 

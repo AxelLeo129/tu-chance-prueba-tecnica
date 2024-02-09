@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -8,6 +8,14 @@ import { environment } from '../../environments/environment';
 export class GeneralService {
 
   constructor(private http: HttpClient) { }
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
 
   /**
    * Realiza una petición HTTP PUT a una URL construida a partir del endpoint y el ID proporcionados.
@@ -22,7 +30,7 @@ export class GeneralService {
    */
   put<T, B>(endpoint: string, id: string, body: B): Promise<T | undefined> {
       const url = `${environment.apiUrl}${endpoint}/${id}`;
-      return this.http.put<T>(url, body).toPromise();
+      return this.http.put<T>(url, body, { headers: this.getHeaders() }).toPromise();
   }
 
   /**
@@ -45,7 +53,7 @@ export class GeneralService {
       values.forEach((value: string, key: string) => {
           params = params + key + '=' + value + '&';
       });
-      return this.http.get<T>(environment.apiUrl + endpoint + params).toPromise();
+      return this.http.get<T>(environment.apiUrl + endpoint + params, { headers: this.getHeaders() }).toPromise();
   }
 
   /**
@@ -65,7 +73,7 @@ export class GeneralService {
    *
    */
   post<T, B>(endpoint: string, body: B): Promise<T | undefined> {
-      return this.http.post<T>(environment.apiUrl + endpoint, body).toPromise();
+      return this.http.post<T>(environment.apiUrl + endpoint, body, { headers: this.getHeaders() }).toPromise();
   }
 
   /**
@@ -84,11 +92,11 @@ export class GeneralService {
    *
    */
   get<T>(endpoint: string): Promise<T | undefined> {
-      return this.http.get<T>(environment.apiUrl + endpoint).toPromise();
+      return this.http.get<T>(environment.apiUrl + endpoint, { headers: this.getHeaders() }).toPromise();
   }
 
   delete<T>(endpoint: string): Promise<T | undefined> {
-    return this.http.delete<T>(environment.apiUrl + endpoint).toPromise();
+    return this.http.delete<T>(environment.apiUrl + endpoint, { headers: this.getHeaders() }).toPromise();
   }
 
 }
